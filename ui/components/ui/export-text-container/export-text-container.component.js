@@ -1,15 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Copy from '../icon/copy-icon.component';
 import { useI18nContext } from '../../../hooks/useI18nContext';
 import { useCopyToClipboard } from '../../../hooks/useCopyToClipboard';
-import { exportAsFile } from '../../../helpers/utils/export-utils';
+import { clearClipboard } from '../../../helpers/utils/util';
+import Copy from '../icon/copy-icon.component';
 
-function ExportTextContainer({
-  text = '',
-  onClickCopy = null,
-  onClickDownload = null,
-}) {
+function ExportTextContainer({ text = '', onClickCopy = null }) {
   const t = useI18nContext();
   const [copied, handleCopy] = useCopyToClipboard();
 
@@ -26,25 +22,17 @@ function ExportTextContainer({
               onClickCopy();
             }
             handleCopy(text);
+            setTimeout(async () => {
+              const clipText = await window.navigator.clipboard.readText();
+              if (text === clipText) {
+                clearClipboard();
+              }
+            }, 60000);
           }}
         >
           <Copy size={17} color="var(--color-primary-default)" />
           <div className="export-text-container__button-text">
-            {copied ? t('copiedExclamation') : t('copyToClipboard')}
-          </div>
-        </div>
-        <div
-          className="export-text-container__button"
-          onClick={() => {
-            if (onClickDownload) {
-              onClickDownload();
-            }
-            exportAsFile('', text);
-          }}
-        >
-          <img src="images/download.svg" alt="" />
-          <div className="export-text-container__button-text">
-            {t('saveAsCsvFile')}
+            {copied ? t('copiedForMinute') : t('copyToClipboard')}
           </div>
         </div>
       </div>
@@ -55,7 +43,6 @@ function ExportTextContainer({
 ExportTextContainer.propTypes = {
   text: PropTypes.string,
   onClickCopy: PropTypes.func,
-  onClickDownload: PropTypes.func,
 };
 
 export default React.memo(ExportTextContainer);

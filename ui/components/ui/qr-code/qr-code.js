@@ -22,13 +22,13 @@ function mapStateToProps(state) {
 
 function QrCodeView(props) {
   const { Qr, warning } = props;
-  const { message, data } = Qr;
-  const address = `${
-    isHexPrefixed(data) ? 'ethereum:' : ''
-  }${toChecksumHexAddress(data)}`;
+  const { message, data, isHexAddress } = Qr;
+  const address = isHexAddress
+    ? `${isHexPrefixed(data) ? 'ethereum:' : ''}${toChecksumHexAddress(data)}`
+    : data;
   const [copied, handleCopy] = useCopyToClipboard();
   const t = useI18nContext();
-  const qrImage = qrCode(4, 'M');
+  const qrImage = qrCode(4, 'L');
   qrImage.addData(address);
   qrImage.make();
 
@@ -56,23 +56,29 @@ function QrCodeView(props) {
           __html: qrImage.createTableTag(4),
         }}
       />
-      <Tooltip
-        wrapperClassName="qr-code__address-container__tooltip-wrapper"
-        position="bottom"
-        title={copied ? t('copiedExclamation') : t('copyToClipboard')}
-      >
-        <div
-          className="qr-code__address-container"
-          onClick={() => {
-            handleCopy(toChecksumHexAddress(data));
-          }}
+      {isHexAddress && (
+        <Tooltip
+          wrapperClassName="qr-code__address-container__tooltip-wrapper"
+          position="bottom"
+          title={copied ? t('copiedExclamation') : t('copyToClipboard')}
         >
-          <div className="qr-code__address">{toChecksumHexAddress(data)}</div>
-          <div className="qr-code__copy-icon">
-            <CopyIcon size={11} className="qr-code__copy-icon__svg" color="" />
+          <div
+            className="qr-code__address-container"
+            onClick={() => {
+              handleCopy(toChecksumHexAddress(data));
+            }}
+          >
+            <div className="qr-code__address">{toChecksumHexAddress(data)}</div>
+            <div className="qr-code__copy-icon">
+              <CopyIcon
+                size={11}
+                className="qr-code__copy-icon__svg"
+                color=""
+              />
+            </div>
           </div>
-        </div>
-      </Tooltip>
+        </Tooltip>
+      )}
     </div>
   );
 }
@@ -85,5 +91,6 @@ QrCodeView.propTypes = {
       PropTypes.node,
     ]),
     data: PropTypes.string.isRequired,
+    isHexAddress: PropTypes.bool,
   }).isRequired,
 };

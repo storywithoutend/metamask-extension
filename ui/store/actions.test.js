@@ -205,6 +205,7 @@ describe('Actions', () => {
         { type: 'SHOW_LOADING_INDICATION', value: undefined },
         { type: 'DISPLAY_WARNING', value: 'error' },
         { type: 'HIDE_LOADING_INDICATION' },
+        { type: 'HIDE_WARNING' },
       ];
 
       await expect(

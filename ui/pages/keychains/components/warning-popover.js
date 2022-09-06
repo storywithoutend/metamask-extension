@@ -55,7 +55,7 @@ export default function WarningPopover({ onClose, onClick }) {
             </Button>,
           ])}
         </Typography>
-        <Box width={BLOCK_SIZES.THREE_FOURTHS} margin={'auto'}>
+        <Box width={BLOCK_SIZES.THREE_FOURTHS} margin="auto">
           <HoldToRevealButton
             buttonText={t('holdToRevealSRP')}
             onLongPressed={onClick}

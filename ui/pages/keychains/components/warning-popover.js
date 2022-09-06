@@ -22,7 +22,7 @@ export default function WarningPopover({ onClose, onClick }) {
       onClose={onClose}
       popoverRef={popoverRef}
     >
-      <Box padding={[0, 6, 6, 6]}>
+      <Box paddingLeft={7} paddingRight={7} paddingBottom={6}>
         <Typography
           variant={TYPOGRAPHY.H6}
           fontWeight={400}
@@ -37,7 +37,7 @@ export default function WarningPopover({ onClose, onClick }) {
         <Typography
           variant={TYPOGRAPHY.H6}
           fontWeight={400}
-          boxProps={{ padding: 0 }}
+          boxProps={{ padding: 0, marginBottom: 6 }}
         >
           {t('secretRecoveryPhrasePopoverDontShareDescription', [
             <b key="dont_share_bold">
@@ -55,7 +55,7 @@ export default function WarningPopover({ onClose, onClick }) {
             </Button>,
           ])}
         </Typography>
-        <Box width={BLOCK_SIZES.THREE_FOURTHS} margin={[4, 'auto', 0, 'auto']}>
+        <Box width={BLOCK_SIZES.THREE_FOURTHS} margin={'auto'}>
           <HoldToRevealButton
             buttonText={t('holdToRevealSRP')}
             onLongPressed={onClick}

@@ -765,6 +765,7 @@ export default class TransactionController extends EventEmitter {
    *
    * @param txParams
    * @param origin
+   * @param method
    * @param transactionType
    * @param sendFlowHistory
    * @param actionId
@@ -850,7 +851,6 @@ export default class TransactionController extends EventEmitter {
     txMeta.txParams.value = txMeta.txParams.value
       ? addHexPrefix(txMeta.txParams.value)
       : '0x0';
-
 
     const flagAsDangerous = await this.securityProviderRequest(txMeta, method);
 

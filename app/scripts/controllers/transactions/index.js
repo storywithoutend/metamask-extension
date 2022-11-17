@@ -336,9 +336,9 @@ export default class TransactionController extends EventEmitter {
     );
 
     const initialTxMeta = await this.addUnapprovedTransaction(
+      opts.method,
       txParams,
       opts.origin,
-      opts.method,
     );
 
     // listen for tx completion (success, fail)
@@ -763,21 +763,21 @@ export default class TransactionController extends EventEmitter {
    * actionId is fix used for making this action idempotent to deal with scenario when
    * action is invoked multiple times with same parameters in MV3 due to service worker re-activation.
    *
+   * @param method
    * @param txParams
    * @param origin
    * @param transactionType
    * @param sendFlowHistory
    * @param actionId
-   * @param method
    * @returns {txMeta}
    */
   async addUnapprovedTransaction(
+    method,
     txParams,
     origin,
     transactionType,
     sendFlowHistory = [],
     actionId,
-    method,
   ) {
     if (
       transactionType !== undefined &&
@@ -852,9 +852,14 @@ export default class TransactionController extends EventEmitter {
       ? addHexPrefix(txMeta.txParams.value)
       : '0x0';
 
-    const flagAsDangerous = await this.securityProviderRequest(txMeta, method);
+    if (method) {
+      const flagAsDangerous = await this.securityProviderRequest(
+        txMeta,
+        method,
+      );
 
-    txMeta.flagAsDangerous = flagAsDangerous;
+      txMeta.flagAsDangerous = flagAsDangerous;
+    }
 
     this.addTransaction(txMeta);
     this.emit('newUnapprovedTx', txMeta);

@@ -355,7 +355,7 @@ describe('Transaction Controller', function () {
     });
 
     it('should add an unapproved transaction and return a valid txMeta', async function () {
-      const txMeta = await txController.addUnapprovedTransaction({
+      const txMeta = await txController.addUnapprovedTransaction(undefined, {
         from: selectedAddress,
         to: recipientAddress,
       });
@@ -379,6 +379,7 @@ describe('Transaction Controller', function () {
 
     it('should add only 1 unapproved transaction when called twice with same actionId', async function () {
       await txController.addUnapprovedTransaction(
+        undefined,
         {
           from: selectedAddress,
           to: recipientAddress,
@@ -391,6 +392,7 @@ describe('Transaction Controller', function () {
       const transactionCount1 =
         txController.txStateManager.getTransactions().length;
       await txController.addUnapprovedTransaction(
+        undefined,
         {
           from: selectedAddress,
           to: recipientAddress,
@@ -407,6 +409,7 @@ describe('Transaction Controller', function () {
 
     it('should add multiple transactions when called with different actionId', async function () {
       await txController.addUnapprovedTransaction(
+        undefined,
         {
           from: selectedAddress,
           to: recipientAddress,
@@ -419,6 +422,7 @@ describe('Transaction Controller', function () {
       const transactionCount1 =
         txController.txStateManager.getTransactions().length;
       await txController.addUnapprovedTransaction(
+        undefined,
         {
           from: selectedAddress,
           to: recipientAddress,
@@ -440,7 +444,7 @@ describe('Transaction Controller', function () {
         done();
       });
       txController
-        .addUnapprovedTransaction({
+        .addUnapprovedTransaction(undefined, {
           from: selectedAddress,
           to: recipientAddress,
         })
@@ -459,7 +463,7 @@ describe('Transaction Controller', function () {
       txController.networkStore = new ObservableStore('loading');
       await assert.rejects(
         () =>
-          txController.addUnapprovedTransaction({
+          txController.addUnapprovedTransaction(undefined, {
             from: selectedAddress,
             to: '0x0d1d4e623D10F9FBA5Db95830F7d3839406C6AF2',
           }),
@@ -503,7 +507,7 @@ describe('Transaction Controller', function () {
     });
 
     it('should add an cancel transaction and return a valid txMeta', async function () {
-      const txMeta = await txController.addUnapprovedTransaction({
+      const txMeta = await txController.addUnapprovedTransaction(undefined, {
         from: selectedAddress,
         to: recipientAddress,
       });
@@ -521,7 +525,7 @@ describe('Transaction Controller', function () {
     });
 
     it('should add only 1 cancel transaction when called twice with same actionId', async function () {
-      const txMeta = await txController.addUnapprovedTransaction({
+      const txMeta = await txController.addUnapprovedTransaction(undefined, {
         from: selectedAddress,
         to: recipientAddress,
       });
@@ -544,7 +548,7 @@ describe('Transaction Controller', function () {
     });
 
     it('should add multiple transactions when called with different actionId', async function () {
-      const txMeta = await txController.addUnapprovedTransaction({
+      const txMeta = await txController.addUnapprovedTransaction(undefined, {
         from: selectedAddress,
         to: recipientAddress,
       });
@@ -1272,7 +1276,7 @@ describe('Transaction Controller', function () {
     });
 
     it('should add only 1 speedup transaction when called twice with same actionId', async function () {
-      const txMeta = await txController.addUnapprovedTransaction({
+      const txMeta = await txController.addUnapprovedTransaction(undefined, {
         from: selectedAddress,
         to: recipientAddress,
       });
@@ -1295,7 +1299,7 @@ describe('Transaction Controller', function () {
     });
 
     it('should add multiple transactions when called with different actionId', async function () {
-      const txMeta = await txController.addUnapprovedTransaction({
+      const txMeta = await txController.addUnapprovedTransaction(undefined, {
         from: selectedAddress,
         to: recipientAddress,
       });

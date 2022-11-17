@@ -227,6 +227,7 @@ describe('MetaMaskController', function () {
       await metamaskController.createNewVaultAndKeychain('test@123');
       const accounts = await metamaskController.keyringController.getAccounts();
       const txMeta = await metamaskController.getApi().addUnapprovedTransaction(
+        undefined,
         {
           from: accounts[0],
           to: recipientAddress,

@@ -87,7 +87,7 @@ export default function TokenAllowance({
   const rpcPrefs = useSelector(getRpcPrefsForCurrentProvider);
   const customTokenAmount = useSelector(getCustomTokenAmount);
 
-  const customPermissionAmount = customTokenAmount.toString();
+  const customPermissionAmount = Number(customTokenAmount);
 
   const customTxParamsData = customTokenAmount
     ? getCustomTxParamsData(data, {
@@ -319,7 +319,7 @@ export default function TokenAllowance({
           <CustomSpendingCap
             tokenName={tokenSymbol}
             currentTokenBalance={parseFloat(currentTokenBalance)}
-            dappProposedValue={parseFloat(dappProposedTokenAmount)}
+            dappProposedValue={dappProposedTokenAmount}
             siteOrigin={origin}
             passTheErrorText={(value) => setErrorText(value)}
           />
@@ -329,8 +329,8 @@ export default function TokenAllowance({
             currentTokenBalance={parseFloat(currentTokenBalance)}
             tokenValue={
               isNaN(parseFloat(customTokenAmount))
-                ? parseFloat(dappProposedTokenAmount)
-                : parseFloat(customTokenAmount)
+                ? dappProposedTokenAmount
+                : customTokenAmount
             }
             onEdit={() => handleBackClick()}
           />

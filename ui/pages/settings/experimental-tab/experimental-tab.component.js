@@ -18,8 +18,6 @@ export default class ExperimentalTab extends PureComponent {
     setUseNftDetection: PropTypes.func,
     setOpenSeaEnabled: PropTypes.func,
     openSeaEnabled: PropTypes.bool,
-    improvedTokenAllowanceEnabled: PropTypes.bool,
-    setImprovedTokenAllowanceEnabled: PropTypes.func,
     transactionSecurityCheckEnabled: PropTypes.bool,
     setTransactionSecurityCheckEnabled: PropTypes.func,
   };
@@ -147,43 +145,6 @@ export default class ExperimentalTab extends PureComponent {
     );
   }
 
-  renderImprovedTokenAllowanceToggle() {
-    const { t } = this.context;
-    const { improvedTokenAllowanceEnabled, setImprovedTokenAllowanceEnabled } =
-      this.props;
-
-    return (
-      <div ref={this.settingsRefs[2]} className="settings-page__content-row">
-        <div className="settings-page__content-item">
-          <span>{t('improvedTokenAllowance')}</span>
-          <div className="settings-page__content-description">
-            {t('improvedTokenAllowanceDescription')}
-          </div>
-        </div>
-        <div className="settings-page__content-item">
-          <div className="settings-page__content-item-col">
-            <ToggleButton
-              value={improvedTokenAllowanceEnabled}
-              onToggle={(value) => {
-                this.context.trackEvent({
-                  category: EVENT.CATEGORIES.SETTINGS,
-                  event: 'Enabled/Disable ImprovedTokenAllowance',
-                  properties: {
-                    action: 'Enabled/Disable ImprovedTokenAllowance',
-                    legacy_event: true,
-                  },
-                });
-                setImprovedTokenAllowanceEnabled(!value);
-              }}
-              offLabel={t('off')}
-              onLabel={t('on')}
-            />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   renderTransactionSecurityCheckToggle() {
     const { t } = this.context;
 
@@ -229,7 +190,6 @@ export default class ExperimentalTab extends PureComponent {
       <div className="settings-page__body">
         {process.env.TRANSACTION_SECURITY_PROVIDER &&
           this.renderTransactionSecurityCheckToggle()}
-        {this.renderImprovedTokenAllowanceToggle()}
         {this.renderOpenSeaEnabledToggle()}
         {this.renderCollectibleDetectionToggle()}
       </div>

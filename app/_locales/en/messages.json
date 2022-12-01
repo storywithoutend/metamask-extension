@@ -1243,6 +1243,9 @@
   "enableOpenSeaAPIDescription": {
     "message": "Use OpenSea's API to fetch NFT data. NFT auto-detection relies on OpenSea's API, and will not be available when this is turned off."
   },
+  "enableOpenSeaSecurityProvider": {
+    "message": "Enable OpenSea's security provider"
+  },
   "enableSmartTransactions": {
     "message": "Enable smart transactions"
   },
@@ -2668,6 +2671,24 @@
   "openInBlockExplorer": {
     "message": "Open in block explorer"
   },
+  "openSeaSecurityProviderBenefit1": {
+    "message": "You can turn this feature on and off in Settings > Experimental at any time."
+  },
+  "openSeaSecurityProviderBenefit2": {
+    "message": "When the feature is on, the provider will have access to the unsigned transactions and signature requests you receive and your preferred language."
+  },
+  "openSeaSecurityProviderBenefit3": {
+    "message": "There might be malicious requests that are not known yet to the provider. You should continue to do your own diligence before signing any request even if no warning is displayed."
+  },
+  "openSeaSecurityProviderDescription1": {
+    "message": "You can now enable a security provider to warn you about any known malicious request you receive!"
+  },
+  "openSeaSecurityProviderDescription2": {
+    "message": "Turn this feature on to see a warning whenever you receive a known malicious request. The malicious request detection and warning is provided by the security provider and shown in the in the transaction or signature request before you sign it."
+  },
+  "openSeaSecurityProviderSubDescription": {
+    "message": "OpenSea is the first security provider available in MetaMask and there'll be more coming soon!"
+  },
   "optional": {
     "message": "Optional"
   },
@@ -4063,6 +4084,9 @@
   "thingsToKeep": {
     "message": "Things to keep in mind:"
   },
+  "thingsToKnow": {
+    "message": "Things to know:"
+  },
   "thisWillCreate": {
     "message": "This will create a new wallet and Secret Recovery Phrase"
   },
@@ -4233,6 +4257,9 @@
   },
   "transactionSecurityCheckDescription": {
     "message": "Turn this on to enable a third party (OpenSea) to review all your transactions and signature requests and warn you about known malicious requests."
+  },
+  "transactionSecurityProviders": {
+    "message": "Transaction security providers are here!"
   },
   "transactionSubmitted": {
     "message": "Transaction submitted with estimated gas fee of $1 at $2."

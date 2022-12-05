@@ -157,11 +157,15 @@ export default function CustomSpendingCap({
                 ? 'custom-spending-cap-input-value'
                 : 'custom-spending-cap'
             }
+            id={
+              value > (currentTokenBalance || error)
+                ? 'custom-spending-cap-input-value'
+                : 'custom-spending-cap'
+            }
           >
             <FormField
               numeric
               dataTestId="custom-spending-cap-input"
-              autoFocus
               wrappingLabelProps={{ as: 'div' }}
               id={
                 value > (currentTokenBalance || error)
@@ -194,6 +198,7 @@ export default function CustomSpendingCap({
                   </button>
                 )
               }
+              suffix={tokenName}
               titleDetailWrapperProps={{ marginBottom: 2, marginRight: 0 }}
               allowDecimals
             />

@@ -8,7 +8,8 @@ const DECIMAL_REGEX = /\.(\d*)/u;
 
 export default function NumericInput({
   detailText = '',
-  value = 0,
+  suffix = '',
+  value,
   onChange,
   error = '',
   autoFocus = false,
@@ -19,6 +20,19 @@ export default function NumericInput({
   id,
   name,
 }) {
+  const getInputWidth = function () {
+    if (!value) {
+      return '100%';
+    }
+    const valueString = String(value);
+    const valueLength = valueString.length || 1;
+    const decimalPointDeficit = valueString.match(/,/u) ? -0.5 : 0;
+    console.log(valueString.match(/1/gu));
+    const onePointDeficit = valueString.match(/1/gu)?.length * -0.5 || 0;
+    console.log('onePointDeficit', onePointDeficit);
+    return `${3 + valueLength + decimalPointDeficit + onePointDeficit}ch`;
+  };
+
   return (
     <div
       className={classNames('numeric-input', { 'numeric-input--error': error })}
@@ -46,7 +60,9 @@ export default function NumericInput({
         placeholder={placeholder}
         id={id}
         name={name}
+        style={{ width: getInputWidth() }}
       />
+      {suffix && value && <div className="numeric-input__suffix">{suffix}</div>}
       {detailText && (
         <Typography
           color={COLORS.TEXT_ALTERNATIVE}
@@ -63,6 +79,7 @@ export default function NumericInput({
 NumericInput.propTypes = {
   value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   detailText: PropTypes.string,
+  suffix: PropTypes.string,
   onChange: PropTypes.func,
   error: PropTypes.string,
   autoFocus: PropTypes.bool,

@@ -31,6 +31,7 @@ export default function FormField({
   value = 0,
   numeric,
   detailText = '',
+  suffix = '',
   autoFocus = false,
   password = false,
   allowDecimals = false,
@@ -108,6 +109,7 @@ export default function FormField({
             disabled={disabled}
             dataTestId={dataTestId}
             placeholder={placeholder}
+            suffix={suffix}
             id={id}
           />
         ) : (
@@ -231,6 +233,10 @@ FormField.propTypes = {
    * Show detail text if field mode is numeric
    */
   detailText: PropTypes.string,
+  /**
+   * Show suffix if passed
+   */
+  suffix: PropTypes.string,
   /**
    * Set autofocus on render
    */

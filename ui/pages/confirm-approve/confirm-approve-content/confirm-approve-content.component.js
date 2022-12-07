@@ -338,12 +338,7 @@ export default class ConfirmApproveContent extends Component {
   }
 
   getTokenName() {
-    const {
-      tokenId,
-      assetName,
-      assetStandard,
-      tokenSymbol,
-    } = this.props;
+    const { tokenId, assetName, assetStandard, tokenSymbol } = this.props;
     const { t } = this.context;
 
     let titleTokenDescription = t('token');

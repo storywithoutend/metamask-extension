@@ -1,6 +1,8 @@
 import sinon from 'sinon';
-import { getNetworkDisplayName } from './util';
+import { NETWORK_TO_NAME_MAP } from '../../../../shared/constants/network';
 import NetworkController, { NETWORK_EVENTS } from './network';
+
+const getNetworkDisplayName = (key) => NETWORK_TO_NAME_MAP[key];
 
 describe('NetworkController', () => {
   describe('controller', () => {

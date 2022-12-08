@@ -22,7 +22,6 @@ import {
   isSafeChainId,
 } from '../../../../shared/modules/network.utils';
 import getFetchWithTimeout from '../../../../shared/modules/fetch-with-timeout';
-import createMetamaskMiddleware from './createMetamaskMiddleware';
 import createInfuraClient from './createInfuraClient';
 import createJsonRpcClient from './createJsonRpcClient';
 
@@ -124,8 +123,7 @@ export default class NetworkController extends EventEmitter {
     this._infuraProjectId = projectId;
   }
 
-  initializeProvider(providerParams) {
-    this._baseProviderParams = providerParams;
+  initializeProvider() {
     const { type, rpcUrl, chainId } = this.getProviderConfig();
     this._configureProvider({ type, rpcUrl, chainId });
     this.lookupNetwork();
@@ -434,11 +432,7 @@ export default class NetworkController extends EventEmitter {
   }
 
   _setNetworkClient({ networkMiddleware, blockTracker }) {
-    const metamaskMiddleware = createMetamaskMiddleware(
-      this._baseProviderParams,
-    );
     const engine = new JsonRpcEngine();
-    engine.push(metamaskMiddleware);
     engine.push(networkMiddleware);
     const provider = providerFromEngine(engine);
     this._setProviderAndBlockTracker({ provider, blockTracker });

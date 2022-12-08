@@ -124,11 +124,11 @@ export default class NetworkController extends EventEmitter {
     this._infuraProjectId = projectId;
   }
 
-  initializeProvider(providerParams) {
+  async initializeProvider(providerParams) {
     this._baseProviderParams = providerParams;
     const { type, rpcUrl, chainId } = this.getProviderConfig();
     this._configureProvider({ type, rpcUrl, chainId });
-    this.lookupNetwork();
+    await this.lookupNetwork();
   }
 
   // return the proxies so the references will always be good
@@ -217,7 +217,7 @@ export default class NetworkController extends EventEmitter {
     return this.getNetworkState() === 'loading';
   }
 
-  lookupNetwork() {
+  async lookupNetwork() {
     // Prevent firing when provider is not defined.
     if (!this._provider) {
       log.warn(
@@ -249,21 +249,35 @@ export default class NetworkController extends EventEmitter {
       this.emit(NETWORK_EVENTS.INFURA_IS_UNBLOCKED);
     }
 
-    ethQuery.sendAsync({ method: 'net_version' }, (err, networkVersion) => {
-      const currentNetwork = this.getNetworkState();
-      if (initialNetwork === currentNetwork) {
-        if (err) {
-          this.setNetworkState('loading');
-          // keep network details in sync with network state
-          this.clearNetworkDetails();
-          return;
-        }
-
-        this.setNetworkState(networkVersion);
-        // look up EIP-1559 support
-        this.getEIP1559Compatibility();
+    let networkVersion;
+    try {
+      networkVersion = await new Promise((resolve, reject) => {
+        ethQuery.sendAsync({ method: 'net_version' }, (error, result) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(result);
+          }
+        });
+      });
+    } catch (error) {
+      if (initialNetwork !== this.getNetworkState()) {
+        return;
       }
-    });
+
+      this.setNetworkState('loading');
+      // keep network details in sync with network state
+      this.clearNetworkDetails();
+      return;
+    }
+
+    if (initialNetwork !== this.getNetworkState()) {
+      return;
+    }
+
+    this.setNetworkState(networkVersion);
+    // look up EIP-1559 support
+    await this.getEIP1559Compatibility();
   }
 
   getCurrentChainId() {
